@@ -2,12 +2,11 @@ package com.example.licznik;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 
@@ -16,31 +15,46 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ListView list;
+    private RoomDao roomDao;
+
+    private NoteListAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        list = (ListView) findViewById(R.id.list);
+        list = findViewById(R.id.list);
 
-        RoomNoteDatabase db = RoomNoteDatabase.getDatabase(this);
-        RoomDao roomDao = db.roomDao();
+        RoomNoteDatabase db = RoomNoteDatabase.getInstance(this);
+        roomDao = db.roomDao();
+
+        Note truskawki = new Note();
+        truskawki.setNoteTitle("Zakupy");
+        truskawki.setNoteContent("Kupić Truskawki");
+
+        Note maliny= new Note();
+        maliny.setNoteTitle("Zakupy");
+        maliny.setNoteContent("Kupić Maliny");
+
+        Note ogorki = new Note();
+        ogorki.setNoteTitle("Zakupy");
+        ogorki.setNoteContent("Kupić ogorki");
+
+        adapter = new NoteListAdapter(this, roomDao);
+        list.setAdapter(adapter);
+
 
 //        RoomNoteDatabase.databaseWriteExecutor.execute(() -> {
 //            roomDao.deleteAll();
-//            roomDao.insertAll(new Note(1, "Zakupy", "Kupic truskawki"),
-//                    new Note(2, "Zakupy", "Kupic borowki"),
-//                    new Note(3, "Zakupy", "Kupic sok"));
+//            roomDao.insertAll(truskawki, maliny, ogorki);
 //        });
 
-        LiveData<List<Note>> notes = roomDao.getAll();
-        notes.observe(this, words -> {
-            words.forEach(w -> {
-                Log.d("DB", w.toString());
-            });
-            ArrayAdapter<Note> adapter = new ArrayAdapter<Note>(this, android.R.layout.simple_list_item_1, words);
-            list.setAdapter(adapter);
+        roomDao.getAll().observe(this, new Observer<List<Note>>() {
+            @Override
+            public void onChanged(List<Note> notes) {
+                adapter.setNotes(notes);
+            }
         });
     }
 
@@ -48,5 +62,4 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddNoteActivity.class);
         startActivity(intent);
     }
-
 }

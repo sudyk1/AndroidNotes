@@ -16,13 +16,12 @@ public abstract class RoomNoteDatabase extends RoomDatabase {
         private static final int NUMBER_OF_THREADS = 4;
         static final ExecutorService databaseWriteExecutor =
                 Executors.newFixedThreadPool(NUMBER_OF_THREADS);
-        static RoomNoteDatabase getDatabase(final Context context) {
+        static RoomNoteDatabase getInstance(final Context context) {
             if (INSTANCE == null) {
                 synchronized (RoomNoteDatabase.class) {
                     if (INSTANCE == null) {
                         INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                        RoomNoteDatabase.class, "kontakts")
-                                .allowMainThreadQueries().build();
+                                        RoomNoteDatabase.class, "notes").build();
                     }
                 }
             }

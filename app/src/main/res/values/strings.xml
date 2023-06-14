@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">My Notes</string>
     <string name="button_add">Add note</string>
+    <string name="twoja_nowa_notatka">Twoja nowa notatka...</string>
+    <string name="note_content">Note Content</string>
+    <string name="note_title">Note title</string>
+    <string name="edit">Edit</string>
+    <string name="approve">Approve</string>
 </resources>

@@ -1,13 +1,17 @@
 package com.example.licznik;
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity(tableName = "room_notes")
 public class Note {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
     private long id;
+    @ColumnInfo(name = "title")
     private String noteTitle;
+    @ColumnInfo(name = "content")
     private String noteContent;
 
     public Note() {

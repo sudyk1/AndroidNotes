@@ -1,42 +1,55 @@
 package com.example.licznik;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.RoomDatabase;
 
 public class AddNoteActivity extends AppCompatActivity {
-    private EditText editTextTitle;
-    private EditText editTextContent;
+    private EditText addTextTitle;
+    private EditText addTextContent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.addnote);
+        setContentView(R.layout.activity_addnote);
 
 
-        editTextTitle = findViewById(R.id.addNoteTitle);
-        editTextContent = findViewById(R.id.editTextContent);
+        addTextTitle = findViewById(R.id.addNoteTitle);
+        addTextContent = findViewById(R.id.addNoteContent);
     }
 
     public void onApproveClick(View view) {
-        String title = editTextTitle.getText().toString();
-        String content = editTextContent.getText().toString();
+        String title = addTextTitle.getText().toString();
+        String content = addTextContent.getText().toString();
 
-        Note newNote = new Note(title, content);
+        if (title.isEmpty()) {
+            title = "Notatka";
+        }
 
-        RoomNoteDatabase db = RoomNoteDatabase.getDatabase(this);
+        Note newNote = new Note();
+        newNote.setNoteTitle(title);
+        newNote.setNoteContent(content);
+
+        RoomNoteDatabase db = RoomNoteDatabase.getInstance(this);
         RoomDao roomDao = db.roomDao();
 
-        roomDao.insertAll(newNote);
-        // Handle the input values as desired (e.g., save to a database, display a toast message, etc.)
-        onBackPressed();
+        RoomNoteDatabase.databaseWriteExecutor.execute(() -> {
+            roomDao.insertAll(newNote);
+
+            Log.d("DB", "Inserted to DB " + newNote.getId() + " " + newNote.getNoteTitle() +
+                    " " + newNote.getNoteContent());
+            runOnUiThread(() -> {
+                Toast.makeText(this, "Note added", Toast.LENGTH_SHORT).show();
+                finish();
+            });
+        });
     }
 
     public void onBackPressed(View view) {
-        finish(); // Close the current activity and go back to the previous activity (MainActivity)
+        finish();
     }
 }

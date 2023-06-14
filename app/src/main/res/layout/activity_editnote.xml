@@ -4,34 +4,34 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    tools:context=".AddNoteActivity">
+    tools:context=".EditNoteActivity">
 
     <EditText
-        android:id="@+id/addNoteTitle"
+        android:id="@+id/editNoteTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:hint="Note title"
+        android:hint="@string/note_title"
         android:textAlignment="center"
         android:textSize="32sp" />
 
     <EditText
-        android:id="@+id/editTextContent"
+        android:id="@+id/editNoteContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_weight="4"
-        android:hint="Note Content"
-        android:text="Twoja nowa notatka..."
+        android:layout_weight="6"
+        android:hint="@string/note_content"
+        android:text="@string/twoja_nowa_notatka"
         android:textAlignment="center" />
 
     <Button
-        android:id="@+id/buttonApprove"
+        android:id="@+id/buttonEdit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:onClick="onApproveClick"
-        android:text="Approve"
+        android:onClick="onEditClick"
+        android:text="@string/edit"
         android:textSize="32sp" />
 
     <Button
@@ -44,4 +44,3 @@
         android:textSize="32sp" />
 
 </LinearLayout>
-
