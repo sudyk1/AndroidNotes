@@ -14,7 +14,7 @@ AndroidNotes is a simple Android application that allows users to create, edit, 
 
 👉 [See app here](https://www.youtube.com/shorts/EUezusXJmq4) 👈
 
-![List main view](listview.JPG) ![Add note view](addnote.JPG)
+![List main view](listview.JPG)
 
 ## Technologies Used
 
