@@ -10,9 +10,11 @@ AndroidNotes is a simple Android application that allows users to create, edit, 
 - **List View**: View all your notes in an organized list.
 - **Persistent Storage**: Saves notes locally, ensuring they are available even after app closure.
 
-## Screenshots
+## Screenshots and preview video
 
-ToDo
+![See app here](https://www.youtube.com/shorts/EUezusXJmq4)
+
+![List main view](listview.JPG) ![Add note view](addnote.JPG)
 
 ## Technologies Used
 
